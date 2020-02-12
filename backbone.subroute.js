@@ -40,26 +40,6 @@
             // Required to have Backbone set up routes
             Backbone.Router.prototype.constructor.call(this, options);
 
-            // grab the full URL
-            var hash;
-            if (Backbone.history.fragment) {
-                hash = Backbone.history.getFragment(Backbone.history.fragment);
-            } else {
-                hash = Backbone.history.getHash();
-            }
-
-            // Trigger the subroute immediately.  this supports the case where
-            // a user directly navigates to a URL with a subroute on the first page load.
-            // Check every element, if one matches, break. Prevent multiple matches
-            _.every(this.routes, function(key, route) {
-                // Use the Backbone parser to turn route into regex for matching
-                if (hash.match(this._routeToRegExp(route))) {
-                    Backbone.history.loadUrl(hash);
-                    return false;
-                }
-                return true;
-            }, this);
-
             if (this.postInitialize) {
                 this.postInitialize(options);
             }
